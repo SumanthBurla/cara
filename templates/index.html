@@ -1,0 +1,44 @@
+{% extends "base.html" %}
+{% block content %}
+
+<section class="chat-shell">
+  <div class="chat-header">
+    <div>
+      <p style="font-size: larger;" class="eyebrow">CARA - Cognitive Affective Response Assistant</p>
+      <p class="subtext">A calm space to talk through how you feel</p>
+    </div>
+
+    <form method="post" action="{{ url_for('reset') }}">
+      <button type="submit" class="secondary-btn">New chat</button>
+    </form>
+  </div>
+
+  <div class="chat-box">
+    {% for msg in chat_history %}
+      <div class="bubble-row {{ msg.role }}">
+        <div class="bubble {{ msg.role }}">
+          <p>{{ msg.content }}</p>
+        </div>
+      </div>
+    {% endfor %}
+  </div>
+
+  <form method="post" action="{{ url_for('chat') }}" class="chat-form">
+    <textarea
+      name="message"
+      rows="3"
+      placeholder="Type how you feel today..."
+      required
+    ></textarea>
+
+    <div class="chat-actions">
+      <button type="submit">Send</button>
+    </div>
+  </form>
+
+  <p class="disclaimer">
+    General wellness support only, not medical or mental health advice.
+  </p>
+</section>
+
+{% endblock %}
