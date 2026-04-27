@@ -4,7 +4,8 @@
 <section class="chat-shell">
   <div class="chat-header">
     <div>
-      <p style="font-size: larger;" class="eyebrow">CARA - Cognitive Affective Response Assistant</p>
+      <p class="eyebrow">Cara</p>
+      <h1>AI wellness chat</h1>
       <p class="subtext">A calm space to talk through how you feel</p>
     </div>
 
@@ -23,7 +24,7 @@
     {% endfor %}
   </div>
 
-  <form method="post" action="{{ url_for('chat') }}" class="chat-form">
+  <form method="post" action="{{ url_for('chat') }}" class="chat-form" id="chatForm">
     <textarea
       name="message"
       rows="3"
@@ -32,7 +33,7 @@
     ></textarea>
 
     <div class="chat-actions">
-      <button type="submit">Send</button>
+      <button type="submit" id="sendBtn">Send</button>
     </div>
   </form>
 
@@ -40,5 +41,36 @@
     General wellness support only, not medical or mental health advice.
   </p>
 </section>
+
+<div class="loading-overlay" id="loadingOverlay" aria-hidden="true">
+  <div class="loading-card">
+    <div class="loading-dots" aria-hidden="true">
+      <span></span>
+      <span></span>
+      <span></span>
+    </div>
+    <h2>Cara is thinking...</h2>
+    <p>Preparing your response</p>
+  </div>
+</div>
+
+<script>
+  const chatForm = document.getElementById("chatForm");
+  const loadingOverlay = document.getElementById("loadingOverlay");
+  const sendBtn = document.getElementById("sendBtn");
+
+  if (chatForm) {
+    chatForm.addEventListener("submit", function () {
+      if (sendBtn) {
+        sendBtn.disabled = true;
+        sendBtn.textContent = "Sending...";
+      }
+
+      loadingOverlay.classList.add("show");
+      loadingOverlay.setAttribute("aria-hidden", "false");
+    });
+  }
+</script>
+
 
 {% endblock %}
